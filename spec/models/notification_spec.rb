@@ -24,5 +24,25 @@ RSpec.describe Notification, type: :model do
       notification.source_app = nil
       expect( notification ).to_not be_valid
     end
+
+    it 'is not valid if phone contains other than integers' do
+      notification.phone = 'abcdef'
+      expect( notification ).not_to be_valid
+    end
+
+    it 'is not valid if phone length is greater than 10' do
+      notification.phone = '12345678901'
+      expect( notification ).not_to be_valid
+    end
+
+    it 'is not valid if phone length is less than 10' do
+      notification.phone = '123456789'
+      expect( notification ).not_to be_valid
+    end
+
+    it 'is not valid if body length is greater than 160' do
+      notification.body = 'a' * 161
+      expect( notification ).not_to be_valid
+    end
   end
 end
