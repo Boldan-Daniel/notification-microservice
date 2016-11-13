@@ -1,4 +1,5 @@
 class NotificationsController < ApplicationController
+  include SmsTool
 
   def show
   end
@@ -8,6 +9,7 @@ class NotificationsController < ApplicationController
 
     respond_to do |format|
       if @notification.save
+        # SmsTool.send_sms '1234567890', 'Body message', 'The app'
         format.json { render action: 'show', status: :created, location: @notification }
       else
         format.json { render json: @notification.errors, status: :unprocessable_entity }

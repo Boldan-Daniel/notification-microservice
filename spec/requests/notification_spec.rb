@@ -6,14 +6,15 @@ RSpec.describe Notification, type: :request do
         'ACCEPT' => 'application/json'
     }
 
-    post '/notifications',
-        {
-            notification: {
-                phone: '222-3333-1111',
-                body: 'Notification body',
-                source_app: 'Notification source app'
-            }
-        }, headers
+    params = {
+        notification: {
+            phone: '2233331111',
+            body: 'Notification body',
+            source_app: 'Notification source app'
+        }
+    }
+
+    post '/notifications', params: params, headers: headers
 
     expect( response.content_type ).to eq( 'application/json' )
     expect( response ).to have_http_status( :created )
@@ -24,13 +25,14 @@ RSpec.describe Notification, type: :request do
         'ACCEPT' => 'application/json'
     }
 
-    post '/notifications',
-         {
-             notification: {
-                 phone: '222-3333-1111',
-                 source_app: 'Notification source app'
-             }
-         }, headers
+    params = {
+        notification: {
+            phone: '2233331111',
+            source_app: 'Notification source app'
+        }
+    }
+
+    post '/notifications', params: params, headers: headers
 
     expect( response.content_type ).to eq( 'application/json' )
     expect( response ).to have_http_status( :unprocessable_entity )
