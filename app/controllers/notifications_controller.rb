@@ -1,7 +1,11 @@
 class NotificationsController < ApplicationController
   include SmsTool
+  before_action :set_notification, only: [:show]
 
   def show
+    respond_to do |format|
+      format.json { render json: @notification.to_json }
+    end
   end
 
   def create
@@ -21,5 +25,9 @@ class NotificationsController < ApplicationController
 
   def notification_params
     params.require( :notification ).permit( :phone, :body, :source_app )
+  end
+
+  def set_notification
+    @notification = Notification.find_by_id params[:id]
   end
 end
