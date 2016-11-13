@@ -10,7 +10,7 @@ RSpec.describe Notification, type: :request do
   end
 
   let(:headers) { {'ACCEPT' => 'application/json' } }
-  
+
   it 'creates a Notificaton' do
     post '/notifications', params: params, headers: headers
 
