@@ -13,11 +13,6 @@ RSpec.describe Client, type: :model do
       expect(client).to_not be_valid
     end
 
-    it 'is not valid with nil api_key' do
-      client.api_key = nil
-      expect(client).to_not be_valid
-    end
-
     it 'has a unique source_app' do
       client_one = create( :client )
       duplicate_client = client_one.dup
@@ -31,6 +26,13 @@ RSpec.describe Client, type: :model do
       notification = client.notifications.create!( phone: '1234567890', body: 'body text' )
 
       expect( notification.source_app ).to eq( 'app_name' )
+    end
+  end
+
+  describe 'callbacks' do
+    it 'will have an api_key automatically assigned when created' do
+      client = Client.create( source_app: 'app_name' )
+      expect( client.api_key ).to_not be_nil
     end
   end
 end
